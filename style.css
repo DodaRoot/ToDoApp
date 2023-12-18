@@ -27,16 +27,19 @@ body {
 }
 .list {
     border: 1px solid white; 
-    padding: 100px;
+    padding: 10px;
     position: absolute;
     right: 10%;
-    bottom: 10%;
+    top: 30%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 250px;
-    flex: 10;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: start;
+    align-items: start;
+    width: 400px;
+    height: 450px;
+    color: aliceblue;
+    font-size: 20px;
 }
 .edit{
     border: 1px solid white;
@@ -45,9 +48,43 @@ body {
     padding: 250px;
     position: absolute;
     left: -30%;
-    bottom: -20%;
+    bottom: -30%;
     display: flex;
     justify-self: center;
     justify-content: center;
     align-items: center;
+}
+.listContent {
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 200px 0px 200px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 22px;
+}
+.listContent p {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.listButton {
+    cursor: pointer;
+    border: 1px solid rgb(13, 255, 0);
+    border-top: 0px;
+    border-right: 0px;
+    border-radius: 0% 0px 0% 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+}
+.listButton p {
+    margin-left: 20%;
+}
+@media only screen and (min-width: 1000px) {
+    .edit{
+        left: -20%;
+        bottom: -30%;
+    }
 }
