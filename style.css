@@ -8,7 +8,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    padding: 0 15px;
+    padding: 0 30px;
     background-color: rgb(46, 48, 63);
     color: aliceblue;
     font-size: 28px;
@@ -37,8 +37,59 @@ main {
 .userLists {
     width: 50%;
     height: 90vh;
-    background-color: rgb(241, 241, 241);
-    border-right: 2px dashed black;
+    border-right: 4px dashed black;
+}
+.userLists button {
+    padding: 0 30px;
+    height: 50px;
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+    font-size: 28px;
+    background-color: rgb(124, 124, 124);
+    color: white;
+    border: none;
+    border-radius: 45px;
+    cursor: pointer;
+}
+.userLists button:hover {
+    outline: 4px solid rgb(0, 255, 0);
+}
+.userLists .card {
+    font-size: 28px;
+    background-color: rgb(124, 124, 124);
+    color: white;
+    border-radius: 45px;
+    width: 95%;
+    height: 50px;
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.userLists .card:hover {
+    outline: 4px solid rgb(0, 255, 0);
+}
+.userLists .card .title {
+    margin: 0px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.userLists .delete {
+    margin: 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    width: 150px;
+    background-color: rgb(46, 48, 63);
+    border-radius: 45px;
+    z-index: 1;
+}
+.userLists .delete:hover {
+    outline: 4px solid red;
 }
 .listContent {
     width: 50%;
