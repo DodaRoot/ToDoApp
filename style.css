@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: sans-serif;
 }
 nav {
     display: flex;
@@ -8,7 +9,16 @@ nav {
     align-items: center;
     height: 10vh;
     padding: 0 15px;
-    background-color: rgb(214, 214, 214);
+    background-color: rgb(46, 48, 63);
+    color: aliceblue;
+    font-size: 28px;
+}
+.userHead {
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .userImg {
     width: 50px;
@@ -16,16 +26,21 @@ nav {
     background-color: red;
     border-radius: 50px;
 }
+.userImg img {
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+}
 main {
     display: flex;
 }
 .userLists {
-    background-color: red;
     width: 50%;
     height: 90vh;
+    background-color: rgb(241, 241, 241);
+    border-right: 2px dashed black;
 }
 .listContent {
-    background-color: rgb(0, 255, 34);
     width: 50%;
     height: 90vh;
 }
