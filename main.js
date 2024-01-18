@@ -12,16 +12,6 @@ let mainObj = {
             2 : ['Task Two' , 'Time To Finnish'],
         },
     } ,
-    1 : {
-        0 : 'Test' ,
-        1 : 'Pass' ,
-        2 : 'None' ,
-        3 : {
-            0 : 'List Name',
-            1 : ['Task One' , 'Time To Finnish'],
-            2 : ['Task Two' , 'Time To Finnish'],
-        },
-    } ,
 }
 
 if (localStorage.getItem('mainObj') == null) {
@@ -31,8 +21,6 @@ if (localStorage.getItem('mainObj') == null) {
 else {
     localObj = JSON.parse(localStorage.getItem('mainObj'))
 }
-
-console.log(localObj)
 
 function signin () {
     event.preventDefault()
@@ -52,6 +40,28 @@ function signin () {
         }
     }
 }
+
+console.log(localObj)
+
+function signup() {
+    event.preventDefault()
+    let user = usernameForm.value
+    let pass = passwordForm.value
+    // Setting up the new data
+    let new_data = { 0 : user , 1 : pass , 2 : 'None'}
+    // Getting the value from obj and setting to temp value
+    let old_data = JSON.parse(localStorage.getItem('mainObj'))
+    // Getting the index of the temp obj
+    let index = (Object.keys(old_data).length)
+    // Setting the new value to temp obj
+    old_data[index] = new_data
+    // Making the temp obj the primary obj
+    localStorage.setItem('mainObj' , JSON.stringify(old_data))
+    location.reload()
+}
+
+
+
 
 // List
 let element = document.querySelectorAll('.card');
