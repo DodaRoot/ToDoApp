@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    background-color: rgb(17, 53, 255);
 }
 nav {
     display: flex;
@@ -94,4 +95,72 @@ main {
 .listContent {
     width: 50%;
     height: 90vh;
+}
+
+/* Login Page */
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginCard {
+    background-color: white;
+    width: 600px;
+    height: fit-content;
+    padding: 30px;
+    border-radius: 80px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+form h4 {
+    width: 50%;
+}
+
+form label {
+    width: 50%;
+    font-size: 25px;
+}
+
+form input {
+    all: unset;
+    border: none;
+    border-bottom: 2px solid rgb(0, 47, 255);
+    width: 50%;
+    font-size: 22px;
+}
+
+form button {
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    width: 50%;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    color: white;
+    font-size: 22px;
+    padding: 8px;
+    border: 1px;
+    border-radius: 100px;
+}
+
+.buttons {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
 }

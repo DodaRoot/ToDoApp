@@ -5,23 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <script src="main.js" async></script>
-    <title>ToDoApp</title>
+    <title>Login</title>
   </head>
   <body>
-    <!-- Navbar -->
-    <nav>
-      <div class="userImg"><img src="images/profile.jpg" alt="profili" /></div>
-      <div class="userHead">Login</div>
-    </nav>
-    <main>
-      <div class="userLists">
-        <div class="card">
-          <div class="title">Gym Training</div>
-          <div class="delete">🗑️</div>
-        </div>
-        <button>Add New</button>
+    <div class="container">
+      <div class="loginCard">
+        <form action="">
+          <h1>Login or SignUp</h1>
+          <label for="username">Username</label>
+          <input id="username" type="text" placeholder="Username" />
+          <label for="password">Password</label>
+          <input id="password" type="text" placeholder="Password" />
+          <h4>
+            Your info will be saved in local storage if you do not want to
+            signup you can use the user / John - 12345
+          </h4>
+          <div class="buttons">
+            <button type="submit">Sign In</button>
+            <button type="submit">Sign Up</button>
+          </div>
+        </form>
       </div>
-      <div class="listContent"></div>
-    </main>
+    </div>
   </body>
 </html>
