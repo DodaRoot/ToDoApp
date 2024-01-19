@@ -10,17 +10,17 @@
   <body>
     <!-- Navbar -->
     <nav>
-      <div class="userImg"><img src="images/profile.jpg" alt="profili" /></div>
-      <div class="userHead">Login</div>
+      <div class="userImg">
+        <img src="images/profile.jpg" alt="profili" />
+      </div>
+      <div class="userHead" onclick="signout()">❌</div>
     </nav>
     <main>
       <div class="userLists">
-        <div class="card">
-          <div class="title">Gym Training</div>
-          <div class="delete">🗑️</div>
-        </div>
-        <button>Add New</button>
+        <div class="contain"></div>
+        <button onclick="addNewList()">Add New</button>
       </div>
+
       <div class="listContent"></div>
     </main>
   </body>
