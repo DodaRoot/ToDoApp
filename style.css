@@ -103,13 +103,16 @@ main {
 .listContent {
     width: 50%;
     height: 90vh;
-    border-right: 4px dashed black;
+    border-left: 4px dashed black;
     overflow-y: scroll;
 }
 .listContent::-webkit-scrollbar {
     display: none;
 }
 .listContent button {
+    display: none;
+    justify-content: center;
+    align-items: center;
     padding: 0 30px;
     height: 50px;
     margin: 2.5% 0;
