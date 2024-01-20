@@ -39,11 +39,15 @@ main {
     width: 50%;
     height: 90vh;
     border-right: 4px dashed black;
+    overflow-y: scroll;
+}
+.userLists::-webkit-scrollbar {
+    display: none;
 }
 .userLists button {
     padding: 0 30px;
     height: 50px;
-    margin-top: 2.5%;
+    margin: 2.5% 0;
     margin-left: 2.5%;
     font-size: 28px;
     background-color: rgb(124, 124, 124);
@@ -67,6 +71,14 @@ main {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+}
+@keyframes fadeIn {
+    0% {
+        margin-left: -100%;
+    }
+    100% {
+        margin-left: 0%;
+    }
 }
 .userLists .card:hover {
     outline: 4px solid rgb(0, 255, 0);

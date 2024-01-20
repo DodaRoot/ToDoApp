@@ -125,18 +125,42 @@ function signout() {
 }
 
 function addNewList() {
-        // Setting up the new data
-        let new_data = {
-                0 : 'Other List Doda' ,
-                1 : 'List Content',
-        }
-        // Getting the value from obj and setting to temp value
+    // Setting up the new data
+    let new_data = {
+        0 : 'Other List Doda' ,
+        1 : 'List Content' ,
+    }
+    // Getting the value from obj and setting to temp value
+    let old_data = JSON.parse(localStorage.getItem('mainObj'))
+    // Getting the index of the temp obj
+    let index = (Object.keys(old_data[logged][3]).length)
+    // Setting the new value to temp obj
+    old_data[logged][3][index] = new_data
+    // Making the temp obj the primary obj
+    localStorage.setItem('mainObj' , JSON.stringify(old_data))        
+    
+    // Appending the new list
+    let contain = document.querySelector('.contain')
+    let card = document.createElement('div')
+    card.setAttribute('class' , 'card')
+    card.style.animation = 'fadeIn 1s ease-in';
+    let title = document.createElement('div')
+    title.setAttribute('class' , 'title')
+    title.innerText = new_data[0]
+    let deleted = document.createElement('div')
+    deleted.setAttribute('class' , 'delete')
+    deleted.innerText = '🗑️'
+    contain.append(card)
+    card.append(title)
+    card.append(deleted)
+    deleted.addEventListener('click' , (x) => {
+        card.style.display = 'none'
         let old_data = JSON.parse(localStorage.getItem('mainObj'))
-        // Getting the index of the temp obj
-        let index = (Object.keys(old_data[logged][3]).length)
-        // Setting the new value to temp obj
-        old_data[logged][3][index] = new_data
-        // Making the temp obj the primary obj
+        delete old_data[logged][3][index]
         localStorage.setItem('mainObj' , JSON.stringify(old_data))
-        location.reload()
+    })
+}
+
+function addNew () {
+
 }
