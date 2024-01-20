@@ -126,9 +126,11 @@ function signout() {
 
 function addNewList() {
     // Setting up the new data
+    event.preventDefault()
+    span.style.display = 'none'
+    let listName = document.querySelector('#listName').value
     let new_data = {
-        0 : 'Other List Doda' ,
-        1 : 'List Content' ,
+        0 : listName ,
     }
     // Getting the value from obj and setting to temp value
     let old_data = JSON.parse(localStorage.getItem('mainObj'))
@@ -161,6 +163,17 @@ function addNewList() {
     })
 }
 
+// Making the add new list modal
+let modal = document.querySelector('.modal')
+let addNewBtn = document.querySelector('.userLists button')
+let span = document.querySelector('.modalContainer')
+window.addEventListener('click' , (x) => {
+    if (x.target == span) {
+        span.style.display = 'none'
+    }
+})
 function addNew () {
-
+    span.style.display = 'flex'
 }
+
+

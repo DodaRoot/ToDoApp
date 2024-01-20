@@ -18,10 +18,19 @@
     <main>
       <div class="userLists">
         <div class="contain"></div>
-        <button onclick="addNewList()">Add New</button>
+        <button onclick="addNew()">Add New</button>
       </div>
-
       <div class="listContent"></div>
     </main>
+    <div class="modalContainer">
+      <div class="modal">
+        <h1>Add New List Info</h1>
+        <form action="">
+          <label for="listName">List Name</label>
+          <input type="text" id="listName" />
+          <button type="submit" onclick="addNewList()">Add List</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

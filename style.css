@@ -126,7 +126,7 @@ main {
     border-radius: 80px;
 }
 
-form {
+.loginCard form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -136,22 +136,22 @@ form {
     height: 100%;
 }
 
-form h1 {
+.loginCard form h1 {
     font-size: 45px;
     padding: 30px 0px;
 }
 
-form h4 {
+.loginCard form h4 {
     width: 50%;
 }
 
-form label {
+.loginCard form label {
     margin-top: 15px;
     width: 50%;
     font-size: 25px;
 }
 
-form input {
+.loginCard form input {
     all: unset;
     border: none;
     border-bottom: 2px solid rgb(0, 47, 255);
@@ -159,7 +159,7 @@ form input {
     font-size: 22px;
 }
 
-form button {
+.loginCard form button {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
@@ -180,4 +180,26 @@ form button {
     align-items: center;
     width: 100%;
     gap: 20px;
+}
+
+.modalContainer {
+    z-index: 2;
+    display: none;
+    position: fixed;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: all;
+}
+
+.modal {
+    display: flex;
+    width: 450px;
+    height: 550px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
 }
