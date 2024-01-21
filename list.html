@@ -22,7 +22,7 @@
       </div>
       <div class="listContent">
         <div class="contain"></div>
-        <button onclick="addNewItem()">Add New Item</button>
+        <button onclick="addNewItemBtn()">Add New Item</button>
       </div>
     </main>
     <div class="modalContainer">
@@ -32,6 +32,16 @@
           <label for="listName">List Name</label>
           <input type="text" id="listName" />
           <button type="submit" onclick="addNewList()">Add List</button>
+        </form>
+      </div>
+    </div>
+    <div class="modalContainerItem">
+      <div class="modal">
+        <h1>Add New Item</h1>
+        <form action="">
+          <label for="itemName">Item Name</label>
+          <input type="text" id="itemName" />
+          <button type="submit" onclick="addNewItem()">Add Item</button>
         </form>
       </div>
     </div>
