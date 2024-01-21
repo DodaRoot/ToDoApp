@@ -1,5 +1,14 @@
+// Login Input
 let usernameForm = document.querySelector('#username')
 let passwordForm = document.querySelector('#password')
+// Add Item Button
+let itemBtn = document.querySelector('.listContent button')
+// Modal and other hide and show comp
+let modal = document.querySelector('.modal')
+let userLists = document.querySelector('.userLists')
+let addNewBtn = document.querySelector('.userLists button')
+let span = document.querySelector('.modalContainer')
+let list = document.querySelectorAll('.card')
 
 let mainObj = {
     0 : {
@@ -92,8 +101,6 @@ else {
     localObj = JSON.parse(localStorage.getItem('mainObj'))
 }
 
-
-
 // CHECKING IF USER IS LOGGED IN AND SWITCHING THE PAGE
 let logged = localStorage.getItem('LOGGED')
 if (logged && document.URL.includes("index.html")) {
@@ -101,7 +108,7 @@ if (logged && document.URL.includes("index.html")) {
 }
 if (logged && document.URL.includes("list.html")) {
     for (let list in localObj[logged][3] ) {
-        appending(list , localObj)
+        appending(list , localObj , false)
     }
 }
 
@@ -163,13 +170,15 @@ function addNewList() {
     // Making the temp obj the primary obj
     localStorage.setItem('mainObj' , JSON.stringify(old_data))        
     // Appending the list
-    appending(index - 1 , old_data)
+    appending(index - 1 , old_data , true)
 }
 
-function appending(index , ref) {
+let cardLocation = null;
+function appending(index , ref , animation) {
     let contain = document.querySelector('.contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
+    animation == true ? card.style.animation = 'fadeIn 1s' : false ;
     let title = document.createElement('div')
     title.setAttribute('class' , 'title')
     title.innerText = ref[logged][3][index][0]
@@ -179,28 +188,54 @@ function appending(index , ref) {
     contain.append(card)
     card.append(title)
     card.append(deleted)
-    card.addEventListener('click' , () => {
-        console.log(index)
+    card.addEventListener('click' , (x) => {
+        if (x.target == card && x.target != deleted) {
+            itemBtn.style.display = 'flex'
+        }
+        cardLocation = index
+        // deleted.style.backgroundColor = 'rgb(0, 255, 0)'
+        card.style.margin = '2.5% 0 0px 4.5%'
     })
     deleted.addEventListener('click' , () => {
+        card.style.display = 'none'
         let old_data = JSON.parse(localStorage.getItem('mainObj'))
         old_data[logged][3].splice(index , 1)
-        console.log([index])
         localStorage.setItem('mainObj' , JSON.stringify(old_data))
-        location.reload()
     })
+    list = document.querySelectorAll('.card')
+    addHideShow()
 }
 
 // Making the add new list modal
-let modal = document.querySelector('.modal')
-let addNewBtn = document.querySelector('.userLists button')
-let span = document.querySelector('.modalContainer')
+
 window.addEventListener('click' , (x) => {
     if (x.target == span) {
         span.style.display = 'none'
     }
 })
+
+// Adding show and hide item add functionality
+function addHideShow() {
+    for (let [index , card] of list.entries()) {
+        window.addEventListener('click' , (x) => {
+            if (x.target == userLists && x.target != card) {
+                itemBtn.style.display = 'none'
+                
+            }
+            if (x.target != card) {
+                let deleteBtn = document.querySelectorAll('.delete')[index]
+                // deleteBtn.style.backgroundColor = 'rgb(46, 48, 63)'
+                card.style.margin = '2.5% 0 0 2.5%'
+            }
+        })
+    }
+}
+addHideShow()
+
 function addNew () {
     span.style.display = 'flex'
 }
 
+function addNewItem() {
+    console.log(localObj[logged][3][cardLocation])
+}

@@ -134,11 +134,11 @@ main {
     border-radius: 45px;
     width: 95%;
     height: 50px;
-    margin-top: 2.5%;
-    margin-left: 2.5%;
+    margin: 2.5% 0 0 2.5%;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    transition: all 2s ease-in-out;
 }
 .listContent .card:hover {
     outline: 4px solid rgb(0, 255, 0);
