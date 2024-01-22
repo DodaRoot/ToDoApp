@@ -173,10 +173,11 @@ function addNewList() {
     localStorage.setItem('mainObj' , JSON.stringify(old_data))        
     localObj = JSON.parse(localStorage.getItem('mainObj'))
     // Appending the list
-    appending(index - 1 , old_data , true)
+    appending(index - 1 , localObj , true)
 }
 
-let cardLocation = null;
+let cardLocation = null
+
 function appending(index , ref , animation) {
     let contain = document.querySelector('.contain')
     let card = document.createElement('div')
@@ -192,16 +193,15 @@ function appending(index , ref , animation) {
     card.append(title)
     card.append(deleted)
     card.addEventListener('click' , (x) => {
-        if (x.target == card && x.target != deleted) {
+        if (x.target != deleted) {
             itemBtn.style.display = 'flex'
         }
         cardLocation = index
         card.style.margin = '2.5% 0 0px 4.5%'
         hideItems()
-        for (let item in ref[logged][3][index][1]) {
-            let info = ref[logged][3][index][1][item]
-            // info != undefined ? console.log(info) : false ;
-            info != undefined ? appendingItem(index , info , false , item) : false ;
+        for (let item in localObj[logged][3][index][1]) {
+            let info = localObj[logged][3][index][1][item]
+            info != undefined ? appendingItem(item , info , false) : false ;
         }
     })
     deleted.addEventListener('click' , () => {
@@ -212,6 +212,7 @@ function appending(index , ref , animation) {
         location.reload()
     })
     list = document.querySelectorAll('.card')
+    localObj = JSON.parse(localStorage.getItem('mainObj'))
     addHideShow()
 }
 
@@ -227,18 +228,16 @@ function addNewItem() {
     // Getting the value from obj and setting to temp value
     let old_data = JSON.parse(localStorage.getItem('mainObj'))
     // Setting the new value to temp obj
-    // console.log(old_data[logged][3][cardLocation][1])
-    // console.log(cardLocation)
     old_data[logged][3][cardLocation][1].push(new_data)
     // Getting the index of the temp obj
-    let index = Object.keys(old_data[logged][3]).length
+    let index = Object.keys(old_data[logged][3][cardLocation][1]).length
     // Making the temp obj the primary obj
     localStorage.setItem('mainObj' , JSON.stringify(old_data))        
     localObj = JSON.parse(localStorage.getItem('mainObj'))
-    appendingItem(index - 1, old_data[logged][3][cardLocation][1][index] , true)
+    appendingItem(index - 1, old_data[logged][3][cardLocation][1][index - 1] , true)
 }
 
-function appendingItem(ref , animation) {
+function appendingItem(index , ref , animation) {
     let contain = document.querySelector('.listContent .contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
@@ -252,17 +251,15 @@ function appendingItem(ref , animation) {
     contain.append(card)
     card.append(title)
     card.append(deleted)
-    // card.addEventListener('click' , (x) => {
-
-    // })
-    // deleted.addEventListener('click' , () => {
-    //     card.style.display = 'none'
-    //     let old_data = JSON.parse(localStorage.getItem('mainObj'))
-    //     old_data[logged][3][cardLocation].splice(index , 1)
-    //     localStorage.setItem('mainObj' , JSON.stringify(old_data))
-    //     location.reload()
-    // })
+    deleted.addEventListener('click' , () => {
+        card.style.display = 'none'
+        let old_data = JSON.parse(localStorage.getItem('mainObj'))
+        old_data[logged][3][cardLocation][1].splice(index , 1)
+        localStorage.setItem('mainObj' , JSON.stringify(old_data))
+        localObj = JSON.parse(localStorage.getItem('mainObj'))
+    })
     itemContainer = document.querySelectorAll('.listContent .contain .card')
+    
 }
 
 function addNewItemBtn() {
@@ -278,8 +275,8 @@ function hideItems() {
 
 // Adding show and hide item add functionality
 function addHideShow() {
-    for (let card of list) {
-        window.addEventListener('click' , (x) => {
+    window.addEventListener('click' , (x) => {
+        for (let card of list) {
             if (x.target == userLists && x.target != card) {
                 itemBtn.style.display = 'none'
                 hideItems()
@@ -287,7 +284,7 @@ function addHideShow() {
             if (x.target != card) {
                 card.style.margin = '2.5% 0 0 2.5%'
             }
-        })
-    }
+        }
+    })
 }
 addHideShow()
