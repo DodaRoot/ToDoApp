@@ -162,7 +162,7 @@ function addNewList() {
     event.preventDefault()
     span.style.display = 'none'
     let listName = document.querySelector('#listName').value
-    let new_data = [listName]
+    let new_data = [listName , []]
     // Getting the value from obj and setting to temp value
     let old_data = JSON.parse(localStorage.getItem('mainObj'))
     // Setting the new value to temp obj
@@ -199,8 +199,9 @@ function appending(index , ref , animation) {
         card.style.margin = '2.5% 0 0px 4.5%'
         hideItems()
         for (let item in ref[logged][3][index][1]) {
-            console.log(ref[logged][3][index][1][item][0])
-            appendingItem(item , localObj , false)
+            let info = ref[logged][3][index][1][item]
+            // info != undefined ? console.log(info) : false ;
+            info != undefined ? appendingItem(index , info , false , item) : false ;
         }
     })
     deleted.addEventListener('click' , () => {
@@ -222,43 +223,45 @@ function addNewItem() {
     event.preventDefault()
     spanItem.style.display = 'none'
     let item = document.querySelector('#itemName').value
-    let new_data = [item , 2.50]
+    let new_data = [item , 'Time']
     // Getting the value from obj and setting to temp value
     let old_data = JSON.parse(localStorage.getItem('mainObj'))
     // Setting the new value to temp obj
-    old_data[logged][3][cardLocation].push(new_data)
+    // console.log(old_data[logged][3][cardLocation][1])
+    // console.log(cardLocation)
+    old_data[logged][3][cardLocation][1].push(new_data)
     // Getting the index of the temp obj
     let index = Object.keys(old_data[logged][3]).length
     // Making the temp obj the primary obj
     localStorage.setItem('mainObj' , JSON.stringify(old_data))        
     localObj = JSON.parse(localStorage.getItem('mainObj'))
-    appendingItem(index - 1 , localObj , true)
+    appendingItem(index - 1, old_data[logged][3][cardLocation][1][index] , true)
 }
 
-function appendingItem(index , ref , animation) {
+function appendingItem(ref , animation) {
     let contain = document.querySelector('.listContent .contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
     animation == true ? card.style.animation = 'fadeIn 1s' : false ;
     let title = document.createElement('div')
     title.setAttribute('class' , 'title')
-    title.innerText = ref[logged][3][index][0]
+    ref != null ? title.innerText = ref[0] : false;
     let deleted = document.createElement('div')
     deleted.setAttribute('class' , 'delete')
     deleted.innerText = '🗑️'
     contain.append(card)
     card.append(title)
     card.append(deleted)
-    card.addEventListener('click' , (x) => {
+    // card.addEventListener('click' , (x) => {
 
-    })
-    deleted.addEventListener('click' , () => {
-        card.style.display = 'none'
-        let old_data = JSON.parse(localStorage.getItem('mainObj'))
-        old_data[logged][3][cardLocation].splice(index , 1)
-        localStorage.setItem('mainObj' , JSON.stringify(old_data))
-        location.reload()
-    })
+    // })
+    // deleted.addEventListener('click' , () => {
+    //     card.style.display = 'none'
+    //     let old_data = JSON.parse(localStorage.getItem('mainObj'))
+    //     old_data[logged][3][cardLocation].splice(index , 1)
+    //     localStorage.setItem('mainObj' , JSON.stringify(old_data))
+    //     location.reload()
+    // })
     itemContainer = document.querySelectorAll('.listContent .contain .card')
 }
 
@@ -269,7 +272,7 @@ function addNewItemBtn() {
 // Making the add new list modal
 function hideItems() {
     for(let item of itemContainer) {
-        item.style.display = 'none'
+        item.remove()
     }
 }
 
