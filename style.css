@@ -272,7 +272,7 @@ main {
 }
 
 .loginCard {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 600px;
     height: fit-content;
     padding: 50px 0px;

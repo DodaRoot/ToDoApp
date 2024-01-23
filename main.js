@@ -4,6 +4,7 @@ let passwordForm = document.querySelector('#password')
 // Add Item Button
 let itemBtn = document.querySelector('.listContent button')
 // Modal and other hide and show comp
+let listContainer = document.querySelectorAll('.userLists .contain .card')
 let itemContainer = document.querySelectorAll('.listContent .contain div')
 let modal = document.querySelector('.modal')
 let userItems = document.querySelector('.listContent')
@@ -111,7 +112,7 @@ if (logged && document.URL.includes("index.html")) {
 }
 if (logged && document.URL.includes("list.html")) {
     for (let list in localObj[logged][3] ) {
-        appending(list , localObj , false)
+        appending(list , localObj[logged][3][list] , false)
     }
 }
 
@@ -141,7 +142,7 @@ function signup() {
     let user = usernameForm.value
     let pass = passwordForm.value
     // Setting up the new data
-    let new_data = { 0 : user , 1 : pass , 2 : 'None'}
+    let new_data = { 0 : user , 1 : pass , 2 : 'None' , 3 : []}
     // Getting the value from obj and setting to temp value
     let old_data = JSON.parse(localStorage.getItem('mainObj'))
     // Getting the index of the temp obj
@@ -174,7 +175,7 @@ function addNewList() {
     localStorage.setItem('mainObj' , JSON.stringify(old_data))        
     localObj = JSON.parse(localStorage.getItem('mainObj'))
     // Appending the list
-    appending(index - 1 , localObj , true)
+    appending(index - 1 , localObj[logged][3][index - 1] , true)
 }
 
 let cardLocation = null
@@ -186,7 +187,7 @@ function appending(index , ref , animation) {
     animation == true ? card.style.animation = 'fadeIn 1s ease-in-out' : false ;
     let title = document.createElement('div')
     title.setAttribute('class' , 'title')
-    title.innerText = ref[logged][3][index][0]
+    title.innerText = ref[0]
     let deleted = document.createElement('div')
     deleted.setAttribute('class' , 'delete')
     deleted.innerText = '🗑️'
@@ -200,21 +201,32 @@ function appending(index , ref , animation) {
         cardLocation = index
         card.style.margin = '2.5% 0 0px 4.5%'
         hideItems()
-        for (let item in localObj[logged][3][index][1]) {
+        localObj = JSON.parse(localStorage.getItem('mainObj'))
+        ref = localObj[logged][3][index]
+        for (let item in ref[1]) {
             if (x.target != deleted) {
                 let info = localObj[logged][3][index][1][item]
-                info != undefined ? appendingItem(item , info , false) : false ;
+                info != undefined ? appendingItem(info , false) : false ;
             }
 
         }
     })
     deleted.addEventListener('click' , () => {
-        card.style.display = 'none'
-        let old_data = JSON.parse(localStorage.getItem('mainObj'))
-        old_data[logged][3].splice(index , 1)
-        localStorage.setItem('mainObj' , JSON.stringify(old_data))
-        location.reload()
+        for(let [i , item] of listContainer.entries()) {
+            if (item == card) {
+                card.remove()
+                let old_data = JSON.parse(localStorage.getItem('mainObj'))
+                old_data[logged][3].splice(i , 1)
+                localStorage.setItem('mainObj' , JSON.stringify(old_data))
+                localObj = JSON.parse(localStorage.getItem('mainObj'))
+                
+                listContainer = document.querySelectorAll('.userLists .contain .card')
+                break;
+            }
+        }
+        
     })
+    listContainer = document.querySelectorAll('.userLists .contain .card')
     list = document.querySelectorAll('.card')
     localObj = JSON.parse(localStorage.getItem('mainObj'))
     addHideShow()
@@ -238,10 +250,10 @@ function addNewItem() {
     // Making the temp obj the primary obj
     localStorage.setItem('mainObj' , JSON.stringify(old_data))        
     localObj = JSON.parse(localStorage.getItem('mainObj'))
-    appendingItem(index - 1, old_data[logged][3][cardLocation][1][index - 1] , true)
+    appendingItem(old_data[logged][3][cardLocation][1][index - 1] , true)
 }
 
-function appendingItem(index , ref , animation) {
+function appendingItem(ref , animation) {
     let contain = document.querySelector('.listContent .contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
@@ -256,14 +268,20 @@ function appendingItem(index , ref , animation) {
     card.append(title)
     card.append(deleted)
     deleted.addEventListener('click' , () => {
-        card.style.display = 'none'
-        let old_data = JSON.parse(localStorage.getItem('mainObj'))
-        old_data[logged][3][cardLocation][1].splice(index , 1)
-        localStorage.setItem('mainObj' , JSON.stringify(old_data))
-        localObj = JSON.parse(localStorage.getItem('mainObj'))
+        for(let [index , item] of itemContainer.entries()) {
+            if (item == card) {
+                card.remove()
+                let old_data = JSON.parse(localStorage.getItem('mainObj'))
+                old_data[logged][3][cardLocation][1].splice(index , 1)
+                localStorage.setItem('mainObj' , JSON.stringify(old_data))
+                localObj = JSON.parse(localStorage.getItem('mainObj'))
+                itemContainer = document.querySelectorAll('.listContent .contain .card')
+                break;
+            }
+        }
+        
     })
     itemContainer = document.querySelectorAll('.listContent .contain .card')
-    
 }
 
 function addNewItemBtn() {
