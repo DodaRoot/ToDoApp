@@ -10,8 +10,21 @@
   <body>
     <!-- Navbar -->
     <nav>
-      <div class="userImg">
-        <img src="images/profile.jpg" alt="profili" />
+      <div class="profile">
+        <div class="profileCont">
+          <div class="userImg">
+            <input
+              type="file"
+              accept="image/*"
+              id="fileInput"
+              style="display: none"
+            />
+            <img src="images/profile.jpg" alt="profili" />
+          </div>
+          <h5>Name</h5>
+        </div>
+
+        <button style="display: none">Save</button>
       </div>
       <div class="userHead" onclick="signout()">❌</div>
     </nav>

@@ -13,6 +13,9 @@ let addNewBtn = document.querySelector('.userLists button')
 let span = document.querySelector('.modalContainer')
 let spanItem = document.querySelector('.modalContainerItem')
 let list = document.querySelectorAll('.card')
+let profile = document.querySelector('.profile h5')
+let profileContainer = document.querySelector('.profile .profileCont')
+let fileInput = document.querySelector('#fileInput')
 
 let mainObj = {
     0 : {
@@ -116,6 +119,31 @@ if (logged && document.URL.includes("list.html")) {
     }
 }
 
+profile.innerText = localObj[logged][0]
+
+let profileImg = document.querySelector('.profile img')
+let profileBtn = document.querySelector('.profile button')
+profileContainer.addEventListener('click' , () => {
+    fileInput.click()
+    profileBtn.style.display = 'flex'
+})
+
+profileBtn.addEventListener('click' , () => {
+    let reader = new FileReader;
+    reader.readAsDataURL(fileInput.files[0])
+    reader.addEventListener('load' , () => {
+        let data = reader.result
+        let old_data = JSON.parse(localStorage.getItem('mainObj'))
+        old_data[logged][2] = data
+        localStorage.setItem('mainObj' , JSON.stringify(old_data))
+        location.reload()
+    })
+})
+
+if (localObj[logged][2] != 'None') {
+    profileImg.src = localObj[logged][2]
+}
+
 function signin () {
     event.preventDefault()
     let user = usernameForm.value
@@ -184,7 +212,7 @@ function appending(index , ref , animation) {
     let contain = document.querySelector('.contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
-    animation == true ? card.style.animation = 'fadeIn 1s ease-in-out' : false ;
+    animation == true ? card.style.animation = 'fadeIn 0.5s ease-in-out' : false ;
     let title = document.createElement('div')
     title.setAttribute('class' , 'title')
     title.innerText = ref[0]
@@ -214,13 +242,15 @@ function appending(index , ref , animation) {
     deleted.addEventListener('click' , () => {
         for(let [i , item] of listContainer.entries()) {
             if (item == card) {
-                card.remove()
-                let old_data = JSON.parse(localStorage.getItem('mainObj'))
-                old_data[logged][3].splice(i , 1)
-                localStorage.setItem('mainObj' , JSON.stringify(old_data))
-                localObj = JSON.parse(localStorage.getItem('mainObj'))
-                
-                listContainer = document.querySelectorAll('.userLists .contain .card')
+                card.style.animation = 'fadeOut 0.3s ease-in-out'
+                setTimeout(() => {
+                    card.remove()
+                    let old_data = JSON.parse(localStorage.getItem('mainObj'))
+                    old_data[logged][3].splice(i , 1)
+                    localStorage.setItem('mainObj' , JSON.stringify(old_data))
+                    localObj = JSON.parse(localStorage.getItem('mainObj'))
+                    listContainer = document.querySelectorAll('.userLists .contain .card')
+                } , 200)
                 break;
             }
         }
@@ -257,7 +287,7 @@ function appendingItem(ref , animation) {
     let contain = document.querySelector('.listContent .contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
-    animation == true ? card.style.animation = 'fadeIn 1s ease-in-out' : false ;
+    animation == true ? card.style.animation = 'fadeIn 0.5s ease-in-out' : false ;
     let title = document.createElement('div')
     title.setAttribute('class' , 'title')
     ref != null ? title.innerText = ref[0] : false;
@@ -270,12 +300,15 @@ function appendingItem(ref , animation) {
     deleted.addEventListener('click' , () => {
         for(let [index , item] of itemContainer.entries()) {
             if (item == card) {
-                card.remove()
-                let old_data = JSON.parse(localStorage.getItem('mainObj'))
-                old_data[logged][3][cardLocation][1].splice(index , 1)
-                localStorage.setItem('mainObj' , JSON.stringify(old_data))
-                localObj = JSON.parse(localStorage.getItem('mainObj'))
-                itemContainer = document.querySelectorAll('.listContent .contain .card')
+                card.style.animation = 'fadeOut 0.3s ease-in-out'
+                setTimeout(() => {
+                    card.remove()
+                    let old_data = JSON.parse(localStorage.getItem('mainObj'))
+                    old_data[logged][3][cardLocation][1].splice(index , 1)
+                    localStorage.setItem('mainObj' , JSON.stringify(old_data))
+                    localObj = JSON.parse(localStorage.getItem('mainObj'))
+                    itemContainer = document.querySelectorAll('.listContent .contain .card')
+                } , 200)
                 break;
             }
         }
