@@ -266,22 +266,59 @@ function addNew () {
     span.style.display = 'flex'
 }
 
+// Getting present date
+
 function addNewItem() {
     event.preventDefault()
     spanItem.style.display = 'none'
     let item = document.querySelector('#itemName').value
-    let new_data = [item , 'Time']
-    // Getting the value from obj and setting to temp value
-    let old_data = JSON.parse(localStorage.getItem('mainObj'))
-    // Setting the new value to temp obj
-    old_data[logged][3][cardLocation][1].push(new_data)
-    // Getting the index of the temp obj
-    let index = Object.keys(old_data[logged][3][cardLocation][1]).length
-    // Making the temp obj the primary obj
-    localStorage.setItem('mainObj' , JSON.stringify(old_data))        
-    localObj = JSON.parse(localStorage.getItem('mainObj'))
-    appendingItem(old_data[logged][3][cardLocation][1][index - 1] , true)
+    let timeInput = document.querySelector('#dateInfo').value
+    let timeArr = timeInput.split('-')
+    timeCalc(timeArr)
+    // let new_data = [item , time]
+    // // Getting the value from obj and setting to temp value
+    // let old_data = JSON.parse(localStorage.getItem('mainObj'))
+    // // Setting the new value to temp obj
+    // old_data[logged][3][cardLocation][1].push(new_data)
+    // // Getting the index of the temp obj
+    // let index = Object.keys(old_data[logged][3][cardLocation][1]).length
+    // // Making the temp obj the primary obj
+    // localStorage.setItem('mainObj' , JSON.stringify(old_data))        
+    // localObj = JSON.parse(localStorage.getItem('mainObj'))
+    // appendingItem(old_data[logged][3][cardLocation][1][index - 1] , true)
 }
+function timeCalc (timeArr) {
+    let date = new Date()
+    let dateYear = date.getFullYear()
+    let dateDay = date.getDate()
+    let dateMonth = date.getUTCMonth() + 1
+    let dateHours = date.getHours()
+    let dateMinutes = date.getMinutes()
+    let timeYear = parseInt(timeArr[0])
+    let timeDay = parseInt(timeArr[2].split('T')[0])
+    let timeMonth = parseInt(timeArr[1])
+    let timeHours = parseInt(timeArr[2].split('T')[1].split(':')[0])
+    let timeMinutes = parseInt(timeArr[2].split('T')[1].split(':')[1])
+    if (dateYear > timeYear) {
+        console.log('invalid date')
+    }
+    else if (dateYear == timeYear && dateMonth > timeMonth) {
+        console.log('invalid date')
+    }
+    else if (dateMonth == timeMonth && dateDay > timeDay) {
+        console.log('invalid date')
+    }
+    else if (dateDay == timeDay && dateHours > timeHours) {
+        console.log('invalid date')
+    }
+    else if (dateHours == timeHours && dateMinutes > timeMinutes) {
+        console.log('invalid date')
+    }
+    else {
+        console.log('request accepted')
+    }
+}
+
 
 function appendingItem(ref , animation) {
     let contain = document.querySelector('.listContent .contain')
@@ -350,4 +387,18 @@ window.addEventListener('click' , (x) => {
         spanItem.style.display = 'none'
     }
 })
+
+function showModal () {
+    let container = document.createElement('div')
+    container.setAttribute('class' , 'popupContainer')
+    let modal = document.createElement('div')
+    modal.setAttribute('class' , 'popupModal')
+    let head = document.createElement('h4')
+    let text = document.createElement('p')
+    document.body.append(container)
+    container.append(modal)
+    modal.append(head)
+    modal.append(text)
+}
+showModal()
 addHideShow()
