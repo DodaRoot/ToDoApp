@@ -6,6 +6,7 @@ let itemBtn = document.querySelector('.listContent button')
 // Modal and other hide and show comp
 let itemContainer = document.querySelectorAll('.listContent .contain div')
 let modal = document.querySelector('.modal')
+let userItems = document.querySelector('.listContent')
 let userLists = document.querySelector('.userLists')
 let addNewBtn = document.querySelector('.userLists button')
 let span = document.querySelector('.modalContainer')
@@ -182,7 +183,7 @@ function appending(index , ref , animation) {
     let contain = document.querySelector('.contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
-    animation == true ? card.style.animation = 'fadeIn 1s' : false ;
+    animation == true ? card.style.animation = 'fadeIn 1s ease-in-out' : false ;
     let title = document.createElement('div')
     title.setAttribute('class' , 'title')
     title.innerText = ref[logged][3][index][0]
@@ -200,8 +201,11 @@ function appending(index , ref , animation) {
         card.style.margin = '2.5% 0 0px 4.5%'
         hideItems()
         for (let item in localObj[logged][3][index][1]) {
-            let info = localObj[logged][3][index][1][item]
-            info != undefined ? appendingItem(item , info , false) : false ;
+            if (x.target != deleted) {
+                let info = localObj[logged][3][index][1][item]
+                info != undefined ? appendingItem(item , info , false) : false ;
+            }
+
         }
     })
     deleted.addEventListener('click' , () => {
@@ -241,7 +245,7 @@ function appendingItem(index , ref , animation) {
     let contain = document.querySelector('.listContent .contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
-    animation == true ? card.style.animation = 'fadeIn 1s' : false ;
+    animation == true ? card.style.animation = 'fadeIn 1s ease-in-out' : false ;
     let title = document.createElement('div')
     title.setAttribute('class' , 'title')
     ref != null ? title.innerText = ref[0] : false;
@@ -281,10 +285,18 @@ function addHideShow() {
                 itemBtn.style.display = 'none'
                 hideItems()
             }
-            if (x.target != card) {
+            if (x.target != userItems && x.target != card) {
                 card.style.margin = '2.5% 0 0 2.5%'
             }
         }
     })
 }
+window.addEventListener('click' , (x) => {
+    if (x.target == span) {
+        span.style.display = 'none'
+    }
+    if (x.target == spanItem) {
+        spanItem.style.display = 'none'
+    }
+})
 addHideShow()

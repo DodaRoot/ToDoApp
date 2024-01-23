@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: rgb(17, 53, 255);
+    background-color: rgb(255, 255, 255);
 }
 nav {
     display: flex;
@@ -40,7 +40,7 @@ main {
 .userLists {
     width: 50%;
     height: 90vh;
-    border-right: 4px dashed black;
+    border-right: 2px dashed black;
     overflow-y: scroll;
 }
 .userLists::-webkit-scrollbar {
@@ -103,7 +103,7 @@ main {
 .listContent {
     width: 50%;
     height: 90vh;
-    border-left: 4px dashed black;
+    border-left: 2px dashed black;
     overflow-y: scroll;
 }
 .listContent::-webkit-scrollbar {
@@ -138,6 +138,7 @@ main {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    opacity: 1;
 }
 .listContent .card:hover {
     outline: 4px solid rgb(0, 255, 0);
@@ -165,10 +166,22 @@ main {
 }
 @keyframes fadeIn {
     0% {
+        opacity: 0.1;
         margin-left: -100%;
     }
     100% {
+        opacity: 1;
         margin-left: 0%;
+    }
+}
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        margin-left: 0%;
+    }
+    100% {
+        opacity: 0.1;
+        margin-left: 140%;
     }
 }
 /* Modal Content */
@@ -183,7 +196,7 @@ main {
     height: 100%;
     pointer-events: all;
 }
-.modalContainer {
+.modalContainer, .modalContainerItem {
     z-index: 2;
     display: none;
     position: fixed;
@@ -203,8 +216,9 @@ main {
     justify-content: center;
     align-items: center;
     gap: 30px;
-    background-color: white;
-    border-radius: 20px;
+    background-color: rgb(46, 48, 63);
+    color: white;
+    border-radius: 40px;
     font-size: 22px;
 }
 
@@ -220,18 +234,32 @@ main {
     width: 50%;
     font-size: 35px;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 }
 
 .modal form input {
-    font-size: 25px;
+    all: unset;
+    border: none;
+    border-bottom: 2px solid rgb(0, 47, 255);
     width: 50%;
+    font-size: 28px;
 }
 
 .modal form button {
-    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 30px;
     width: 50%;
+    height: 50px;
+    margin: 2.5% 0;
+    margin-left: 2.5%;
+    font-size: 28px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 85px;
+    cursor: pointer;
 }
 
 /* Login Page */
