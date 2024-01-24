@@ -148,6 +148,12 @@ main {
     justify-content: center;
     align-items: center;
 }
+.listContent .card .time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(13, 255, 0);
+}
 .listContent .delete {
     margin: 0px 0px;
     display: flex;
@@ -375,15 +381,19 @@ main {
 }
 .popupModal {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 1%;
     width: 800px;
     height: 200px;
-    background-color: black;
+    background-color: rgb(66, 66, 66);
     border-radius: 120px;
     pointer-events: none;
     animation: dropDown 0.5s ease-in-out;
+    font-size: 23px;
+    color: white;
+    pointer-events: all;
 }
 @keyframes dropDown {
     0% {
