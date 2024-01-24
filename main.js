@@ -235,7 +235,7 @@ function appending(index , ref , animation) {
         for (let item in ref[1]) {
             if (x.target != deleted) {
                 let info = localObj[logged][3][index][1][item]
-                info != undefined ? appendingItem(info , false) : false ;
+                info != undefined ? appendingItem(info , false , false) : false ;
             }
 
         }
@@ -291,9 +291,10 @@ function addNewItem() {
         // Making the temp obj the primary obj
         localStorage.setItem('mainObj' , JSON.stringify(old_data))        
         localObj = JSON.parse(localStorage.getItem('mainObj'))
-        appendingItem(old_data[logged][3][cardLocation][1][index - 1] , true)
+        appendingItem(old_data[logged][3][cardLocation][1][index - 1] , true , true)
     }
 }
+
 function timeLeft (time) {
     // Current time
     let date = new Date()
@@ -331,13 +332,13 @@ function timeLeft (time) {
     }
     let data = `${years}y ${months}mon ${days}day ${hours}h ${minutes}min`
     if (years == 0 && months == 0 && days == 0 && minutes == 0) {
-        return (['TimeOut' , 'red'])
+        return (['TimeOut' , 'red'])  
     }
     else {
         return ([data , 'rgb(47, 255, 0);'])
     }
-    
 }
+
 function timeCalc (timeArr) {
     if (timeArr[0] == null || timeArr[0] == ['']) {
         return null
@@ -396,10 +397,7 @@ function timeCalc (timeArr) {
     }
 }
 
-
-
-
-function appendingItem(ref , animation) {
+function appendingItem(ref , animation , timerSet) {
     let contain = document.querySelector('.listContent .contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
@@ -409,7 +407,6 @@ function appendingItem(ref , animation) {
     title.setAttribute('class' , 'title')
     time.setAttribute('class' , 'time')
     ref != null ? title.innerText = ref[0] : false;
-    time.innerText = timeLeft(ref)[0]
     let deleted = document.createElement('div')
     deleted.setAttribute('class' , 'delete')
     deleted.innerText = '🗑️'
@@ -417,18 +414,30 @@ function appendingItem(ref , animation) {
     card.append(title)
     card.append(time)
     card.append(deleted)
-    const timer = setInterval(() => {
-        let returnTime = timeLeft(ref)
-        time.innerText = returnTime[0]
-        time.style.color = returnTime[1]
-    } , 1000)
+    time.innerText = timeLeft(ref)[0]
+    time.style.color = timeLeft(ref)[1]
+    if (timerSet == true) {
+        const timer = setInterval(() => {
+            let returnTime = timeLeft(ref)
+            console.log(returnTime)
+            if (returnTime[0] == 'TimeOut') {
+                clearInterval(timer)
+                time.innerText = returnTime[0]
+                time.style.color = returnTime[1]         
+            }
+            else {
+                time.innerText = returnTime[0]
+                time.style.color = returnTime[1]
+            }
+        } , 1000)
+    }
     deleted.addEventListener('click' , () => {
         for(let [index , item] of itemContainer.entries()) {
             if (item == card) {
                 card.style.animation = 'fadeOut 0.3s ease-in-out'
                 setTimeout(() => {
                     card.remove()
-                    clearInterval(timer)
+                    animation ? clearInterval(timer) : false ;
                     let old_data = JSON.parse(localStorage.getItem('mainObj'))
                     old_data[logged][3][cardLocation][1].splice(index , 1)
                     localStorage.setItem('mainObj' , JSON.stringify(old_data))
@@ -438,7 +447,6 @@ function appendingItem(ref , animation) {
                 break;
             }
         }
-        
     })
     itemContainer = document.querySelectorAll('.listContent .contain .card')
 }
@@ -468,6 +476,7 @@ function addHideShow() {
         }
     })
 }
+
 window.addEventListener('click' , (x) => {
     if (x.target == span) {
         span.style.display = 'none'
