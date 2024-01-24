@@ -295,7 +295,6 @@ function addNewItem() {
     }
 }
 function timeLeft (time) {
-    console.log(time)
     // Current time
     let date = new Date()
     let dateYear = date.getFullYear()
@@ -310,8 +309,34 @@ function timeLeft (time) {
     let timeMonth = parseInt(timeArr[2])
     let timeHours = parseInt(timeArr[3])
     let timeMinutes = parseInt(timeArr[4])
+    let years = timeYear - dateYear
+    let months = timeMonth - dateMonth
+    let days = timeDay - dateDay
+    let hours = timeHours - dateHours
+    let minutes = timeMinutes - dateMinutes
+    let daysOfTheMonth = [31 , 29 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31]
+    if (months < 0) {
+        months += months * -2 
+    }
+    if (days < 0) {
+        days = daysOfTheMonth[dateMonth - 1] - (days * -1)  
+    }
+    if (hours < 0) {
+        hours = 24 - (hours * -1)
+        days >= 1 ? days-- : false ;
+    }
+    if (minutes < 0) {
+        minutes = 60 - (minutes * -1)
+        hours >= 1 ? hours-- : false ;
+    }
+    let data = `${years}y ${months}mon ${days}day ${hours}h ${minutes}min`
+    if (years == 0 && months == 0 && days == 0 && minutes == 0) {
+        return (['TimeOut' , 'red'])
+    }
+    else {
+        return ([data , 'rgb(47, 255, 0);'])
+    }
     
-    console.log(`${days}`)
 }
 function timeCalc (timeArr) {
     if (timeArr[0] == null || timeArr[0] == ['']) {
@@ -337,7 +362,7 @@ function timeCalc (timeArr) {
             if (dateMonth > timeMonth) {
                 return null  
             }
-            else if (dateMonth == dateMonth) {
+            else if (dateMonth == timeMonth) {
                 if (dateDay > timeDay) {
                     return null
                 }
@@ -375,7 +400,6 @@ function timeCalc (timeArr) {
 
 
 function appendingItem(ref , animation) {
-    timeLeft(ref)
     let contain = document.querySelector('.listContent .contain')
     let card = document.createElement('div')
     card.setAttribute('class' , 'card')
@@ -384,9 +408,8 @@ function appendingItem(ref , animation) {
     let time = document.createElement('div')
     title.setAttribute('class' , 'title')
     time.setAttribute('class' , 'time')
-    let timeArr = ref[1].split(' ')
     ref != null ? title.innerText = ref[0] : false;
-    timeArr != null ? time.innerText =  timeArr[0]: false;
+    time.innerText = timeLeft(ref)[0]
     let deleted = document.createElement('div')
     deleted.setAttribute('class' , 'delete')
     deleted.innerText = '🗑️'
@@ -394,12 +417,18 @@ function appendingItem(ref , animation) {
     card.append(title)
     card.append(time)
     card.append(deleted)
+    const timer = setInterval(() => {
+        let returnTime = timeLeft(ref)
+        time.innerText = returnTime[0]
+        time.style.color = returnTime[1]
+    } , 1000)
     deleted.addEventListener('click' , () => {
         for(let [index , item] of itemContainer.entries()) {
             if (item == card) {
                 card.style.animation = 'fadeOut 0.3s ease-in-out'
                 setTimeout(() => {
                     card.remove()
+                    clearInterval(timer)
                     let old_data = JSON.parse(localStorage.getItem('mainObj'))
                     old_data[logged][3][cardLocation][1].splice(index , 1)
                     localStorage.setItem('mainObj' , JSON.stringify(old_data))
