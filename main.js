@@ -16,7 +16,6 @@ let list = document.querySelectorAll('.card')
 let profile = document.querySelector('.profile h5')
 let profileContainer = document.querySelector('.profile .profileCont')
 let fileInput = document.querySelector('#fileInput')
-let btn = document.querySelector('.modalContainerItem button')
 
 let mainObj = {
     0 : {
@@ -43,7 +42,6 @@ else {
     localObj = JSON.parse(localStorage.getItem('mainObj'))
 }
 
-// CHECKING IF USER IS LOGGED IN AND SWITCHING THE PAGE
 let logged = localStorage.getItem('LOGGED')
 if (logged && document.URL.includes("index.html")) {
     location.replace('list.html')
@@ -54,30 +52,32 @@ if (logged && document.URL.includes("list.html")) {
     }
 }
 
-profile.innerText = localObj[logged][0]
+if (document.URL.includes('list.html')) {
+    profile.innerText = localObj[logged][0]
 
-let profileImg = document.querySelector('.profile img')
-let profileBtn = document.querySelector('.profile button')
-profileContainer.addEventListener('click' , () => {
-    fileInput.click()
-    profileBtn.style.display = 'flex'
-})
-
-profileBtn.addEventListener('click' , () => {
-    let reader = new FileReader;
-    reader.readAsDataURL(fileInput.files[0])
-    reader.addEventListener('load' , () => {
-        let data = reader.result
-        let old_data = JSON.parse(localStorage.getItem('mainObj'))
-        old_data[logged][2] = data
-        localStorage.setItem('mainObj' , JSON.stringify(old_data))
-        location.reload()
+    let profileImg = document.querySelector('.profile img')
+    let profileBtn = document.querySelector('.profile button')
+    profileContainer.addEventListener('click' , () => {
+        fileInput.click()
+        profileBtn.style.display = 'flex'
     })
-})
 
-if (localObj[logged][2] != 'None') {
-    profileImg.src = localObj[logged][2]
-}
+    profileBtn.addEventListener('click' , () => {
+        let reader = new FileReader;
+        reader.readAsDataURL(fileInput.files[0])
+        reader.addEventListener('load' , () => {
+            let data = reader.result
+            let old_data = JSON.parse(localStorage.getItem('mainObj'))
+            old_data[logged][2] = data
+            localStorage.setItem('mainObj' , JSON.stringify(old_data))
+            location.reload()
+        })
+    })
+    
+    if (localObj[logged][2] != 'None') {
+        profileImg.src = localObj[logged][2]
+    }
+}   
 
 function signin () {
     event.preventDefault()
@@ -86,16 +86,15 @@ function signin () {
     for (let index in localObj) {
         if (user == localObj[index][0] && pass == localObj[index][1]) {
             localStorage.setItem('LOGGED' , index)
-            alert('Welcome ' + user)
-            location.reload()
+            showModal('Success' , `Welcome ${user}` , true)
             break;
         }
         else if (user == localObj[index][0]) {
-            alert('User exists but password is wrong')
+            showModal('Error' , 'User exists but password is wrong')
             break;
         }
         else if (index == Object.keys(localObj).length - 1){
-            alert('User does not exist')
+            showModal('Error' , 'User does not exist')
         }
     }
 }
@@ -466,7 +465,7 @@ window.addEventListener('click' , (x) => {
     }
 })
 
-function showModal (modalHead , modalText) {
+function showModal (modalHead , modalText , button) {
     let container = document.createElement('div')
     container.setAttribute('class' , 'popupContainer')
     let modal = document.createElement('div')
@@ -479,10 +478,23 @@ function showModal (modalHead , modalText) {
     container.append(modal)
     modal.append(head)
     modal.append(text)
-    window.addEventListener('click' , (x) => {
-        if (x.target != modal && x.target != btn){
-            container.remove()
-        }
-    })
+
+    if (button == true) {
+        let modalButton = document.createElement('button')
+        modalButton.innerText = 'Continue'
+        modal.append(modalButton)
+        modalButton.addEventListener('click' , () => {
+            location.replace('list.html')
+        })
+    }
+    else {
+        setTimeout(() => {
+            window.addEventListener('click' , (x) => {
+                if (x.target != modal){
+                    container.remove()
+                }
+            })
+        } , 1000)
+    }
 }
 addHideShow()
