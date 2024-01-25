@@ -24,39 +24,6 @@ let mainObj = {
         1 : '12345' ,
         2 : 'None' ,
         3 : [
-            [
-                'List One' ,
-                [
-                    [
-                        'Item One' , 'Time To Do It'
-                    ],
-                    [
-                        'Item Two' , 'Time To Do It'
-                    ]
-                ]
-            ],
-            [
-                'List Two' ,
-                [
-                    [
-                        'Item One' , 'Time To Do It'
-                    ],
-                    [
-                        'Item Two' , 'Time To Do It'
-                    ]
-                ]
-            ],
-            [
-                'List Three' ,
-                [
-                    [
-                        'Item One' , 'Time To Do It'
-                    ],
-                    [
-                        'Item Two' , 'Time To Do It'
-                    ]
-                ]
-            ],
         ],
     } ,
     1 : {
@@ -64,39 +31,6 @@ let mainObj = {
         1 : '12345' ,
         2 : 'None' ,
         3 : [
-            [
-                'List One' ,
-                [
-                    [
-                        'Item One' , 'Time To Do It'
-                    ],
-                    [
-                        'Item Two' , 'Time To Do It'
-                    ]
-                ]
-            ],
-            [
-                'List Two' ,
-                [
-                    [
-                        'Item One' , 'Time To Do It'
-                    ],
-                    [
-                        'Item Two' , 'Time To Do It'
-                    ]
-                ]
-            ],
-            [
-                'List Three' ,
-                [
-                    [
-                        'Item One' , 'Time To Do It'
-                    ],
-                    [
-                        'Item Two' , 'Time To Do It'
-                    ]
-                ]
-            ],
         ],
     } ,
 }
@@ -235,7 +169,7 @@ function appending(index , ref , animation) {
         for (let item in ref[1]) {
             if (x.target != deleted) {
                 let info = localObj[logged][3][index][1][item]
-                info != undefined ? appendingItem(info , false , false) : false ;
+                info != undefined ? appendingItem(info , false , (timeCalc(info[1] , false))) : false ;
             }
 
         }
@@ -275,7 +209,7 @@ function addNewItem() {
     let item = document.querySelector('#itemName').value
     let timeInput = document.querySelector('#dateInfo').value
     let timeArr = timeInput.split('-')
-    let time = timeCalc(timeArr)
+    let time = timeCalc(timeArr , true)
     if (item == '' || time == null) {
         item == '' ? showModal('Error' , 'Invalid Name') : false ;
         time == null ? showModal('Error' , 'Invalid Date') : false ;
@@ -292,6 +226,161 @@ function addNewItem() {
         localStorage.setItem('mainObj' , JSON.stringify(old_data))        
         localObj = JSON.parse(localStorage.getItem('mainObj'))
         appendingItem(old_data[logged][3][cardLocation][1][index - 1] , true , true)
+    }
+}
+
+let intervalIds = [];
+function appendingItem(ref , animation , type) {
+    let contain = document.querySelector('.listContent .contain')
+    let card = document.createElement('div')
+    card.setAttribute('class' , 'card')
+    animation == true ? card.style.animation = 'fadeIn 0.5s ease-in-out' : false ;
+    let title = document.createElement('div')
+    let time = document.createElement('div')
+    title.setAttribute('class' , 'title')
+    time.setAttribute('class' , 'time')
+    ref != null ? title.innerText = ref[0] : false;
+    let deleted = document.createElement('div')
+    deleted.setAttribute('class' , 'delete')
+    deleted.innerText = '🗑️'
+    contain.append(card)
+    card.append(title)
+    card.append(time)
+    card.append(deleted)
+    if (type == null) {
+        time.innerText = 'TimeOut'
+        time.style.color = 'red'
+        deleted.addEventListener('click' , () => {
+            for(let [index , item] of itemContainer.entries()) {
+                if (item == card) {
+                    card.style.animation = 'fadeOut 0.3s ease-in-out'
+                    setTimeout(() => {
+                        card.remove()
+                        let old_data = JSON.parse(localStorage.getItem('mainObj'))
+                        old_data[logged][3][cardLocation][1].splice(index , 1)
+                        localStorage.setItem('mainObj' , JSON.stringify(old_data))
+                        localObj = JSON.parse(localStorage.getItem('mainObj'))
+                        itemContainer = document.querySelectorAll('.listContent .contain .card')
+                    } , 200)
+                    break;
+                }
+            }
+        })
+    }
+    else {
+        time.innerText = timeLeft(ref)[0]
+        time.style.color = timeLeft(ref)[1]
+        const Timer = setInterval(() => {
+            time.innerText = timeLeft(ref)[0]
+            time.style.color = timeLeft(ref)[1]
+            timeLeft(ref)[0] == 'TimeOut' ? clearInterval(Timer) : false ;
+        } , 1000)
+        intervalIds.push(Timer)
+        deleted.addEventListener('click' , () => {
+            for(let [index , item] of itemContainer.entries()) {
+                if (item == card) {
+                    card.style.animation = 'fadeOut 0.3s ease-in-out'
+                    setTimeout(() => {
+                        card.remove()
+                        type != null ? clearInterval(Timer) : false ;
+                        let old_data = JSON.parse(localStorage.getItem('mainObj'))
+                        old_data[logged][3][cardLocation][1].splice(index , 1)
+                        localStorage.setItem('mainObj' , JSON.stringify(old_data))
+                        localObj = JSON.parse(localStorage.getItem('mainObj'))
+                        itemContainer = document.querySelectorAll('.listContent .contain .card')
+                    } , 200)
+                    break;
+                }
+            }
+        })
+    }
+    itemContainer = document.querySelectorAll('.listContent .contain .card')
+}
+
+function timeCalc (timeArr , validate) {
+    if (timeArr[0] == null || timeArr[0] == ['']) { 
+        return null
+    }
+    else {
+        if (validate == true) {
+            let date = new Date()
+            let dateYear = date.getFullYear()
+            let dateDay = date.getDate()
+            let dateMonth = date.getUTCMonth() + 1
+            let dateHours = date.getHours()
+            let dateMinutes = date.getMinutes()
+            let timeYear = parseInt(timeArr[0])
+            let timeDay = parseInt(timeArr[2].split('T')[0])
+            let timeMonth = parseInt(timeArr[1])
+            let timeHours = parseInt(timeArr[2].split('T')[1].split(':')[0])
+            let timeMinutes = parseInt(timeArr[2].split('T')[1].split(':')[1])
+            // The Ifs of doom
+            if (dateYear > timeYear) {
+                return null  
+            }
+            else if (dateYear == timeYear) {  
+                if (dateMonth > timeMonth) {
+                    return null  
+                }
+                else if (dateMonth == timeMonth) {
+                    if (dateDay > timeDay) {
+                        return null
+                    }
+                    else if (dateDay == timeDay) {
+                        if (dateHours > timeHours) {
+                            return null
+                        }
+                        else if (dateHours == timeHours) {
+                            if (dateMinutes > timeMinutes) {
+                                return null
+                            }
+                            else {
+                                return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
+                            }
+                        }
+                        else {
+                            return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
+                        }
+                    }
+                    else {
+                        return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
+                    }
+                }
+                else {
+                    return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
+                }
+            }
+            else {
+                return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
+            }
+        }
+        else {
+            let date = new Date()
+            let dateYear = date.getFullYear()
+            let dateDay = date.getDate()
+            let dateMonth = date.getUTCMonth() + 1
+            let dateHours = date.getHours()
+            let dateMinutes = date.getMinutes()
+            timeArr = timeArr.split(' ')
+            let timeYear = parseInt(timeArr[0])
+            let timeDay = parseInt(timeArr[1])
+            let timeMonth = parseInt(timeArr[2])
+            let timeHours = parseInt(timeArr[3])
+            let timeMinutes = parseInt(timeArr[4])
+            // The Ifs of doom
+            let years = timeYear - dateYear
+            let months = timeMonth - dateMonth
+            let days = timeDay - dateDay
+            let hours = timeHours - dateHours
+            let minutes = timeMinutes - dateMinutes
+            if (years <= 0 && days <= 0 && months <= 0 && hours <= 0 && minutes <= 0) {
+                return null
+            }
+            else {
+                return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
+            }
+            
+        }
     }
 }
 
@@ -339,118 +428,6 @@ function timeLeft (time) {
     }
 }
 
-function timeCalc (timeArr) {
-    if (timeArr[0] == null || timeArr[0] == ['']) {
-        return null
-    }
-    else {
-        let date = new Date()
-        let dateYear = date.getFullYear()
-        let dateDay = date.getDate()
-        let dateMonth = date.getUTCMonth() + 1
-        let dateHours = date.getHours()
-        let dateMinutes = date.getMinutes()
-        let timeYear = parseInt(timeArr[0])
-        let timeDay = parseInt(timeArr[2].split('T')[0])
-        let timeMonth = parseInt(timeArr[1])
-        let timeHours = parseInt(timeArr[2].split('T')[1].split(':')[0])
-        let timeMinutes = parseInt(timeArr[2].split('T')[1].split(':')[1])
-        // The Ifs of doom
-        if (dateYear > timeYear) {
-            return null  
-        }
-        else if (dateYear == timeYear) {  
-            if (dateMonth > timeMonth) {
-                return null  
-            }
-            else if (dateMonth == timeMonth) {
-                if (dateDay > timeDay) {
-                    return null
-                }
-                else if (dateDay == timeDay) {
-                    if (dateHours > timeHours) {
-                        return null
-                    }
-                    else if (dateHours == timeHours) {
-                        if (dateMinutes > timeMinutes) {
-                            return null
-                        }
-                        else {
-                            return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
-                        }
-                    }
-                    else {
-                        return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
-                    }
-                }
-                else {
-                    return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
-                }
-            }
-            else {
-                return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
-            }
-        }
-        else {
-            return(`${timeYear} ${timeDay} ${timeMonth} ${timeHours} ${timeMinutes}`)
-        }
-    }
-}
-
-function appendingItem(ref , animation , timerSet) {
-    let contain = document.querySelector('.listContent .contain')
-    let card = document.createElement('div')
-    card.setAttribute('class' , 'card')
-    animation == true ? card.style.animation = 'fadeIn 0.5s ease-in-out' : false ;
-    let title = document.createElement('div')
-    let time = document.createElement('div')
-    title.setAttribute('class' , 'title')
-    time.setAttribute('class' , 'time')
-    ref != null ? title.innerText = ref[0] : false;
-    let deleted = document.createElement('div')
-    deleted.setAttribute('class' , 'delete')
-    deleted.innerText = '🗑️'
-    contain.append(card)
-    card.append(title)
-    card.append(time)
-    card.append(deleted)
-    time.innerText = timeLeft(ref)[0]
-    time.style.color = timeLeft(ref)[1]
-    if (timerSet == true) {
-        const timer = setInterval(() => {
-            let returnTime = timeLeft(ref)
-            console.log(returnTime)
-            if (returnTime[0] == 'TimeOut') {
-                clearInterval(timer)
-                time.innerText = returnTime[0]
-                time.style.color = returnTime[1]         
-            }
-            else {
-                time.innerText = returnTime[0]
-                time.style.color = returnTime[1]
-            }
-        } , 1000)
-    }
-    deleted.addEventListener('click' , () => {
-        for(let [index , item] of itemContainer.entries()) {
-            if (item == card) {
-                card.style.animation = 'fadeOut 0.3s ease-in-out'
-                setTimeout(() => {
-                    card.remove()
-                    animation ? clearInterval(timer) : false ;
-                    let old_data = JSON.parse(localStorage.getItem('mainObj'))
-                    old_data[logged][3][cardLocation][1].splice(index , 1)
-                    localStorage.setItem('mainObj' , JSON.stringify(old_data))
-                    localObj = JSON.parse(localStorage.getItem('mainObj'))
-                    itemContainer = document.querySelectorAll('.listContent .contain .card')
-                } , 200)
-                break;
-            }
-        }
-    })
-    itemContainer = document.querySelectorAll('.listContent .contain .card')
-}
-
 function addNewItemBtn() {
     spanItem.style.display = 'flex'
 }
@@ -459,6 +436,9 @@ function addNewItemBtn() {
 function hideItems() {
     for(let item of itemContainer) {
         item.remove()
+    }
+    for(let timer of intervalIds) {
+        clearInterval(timer)
     }
 }
 
