@@ -52,7 +52,7 @@ main {
     margin: 2.5% 0;
     margin-left: 2.5%;
     font-size: 28px;
-    background-color: rgb(124, 124, 124);
+    background-color: rgb(0, 80, 227);
     color: white;
     border: none;
     border-radius: 45px;
@@ -63,7 +63,7 @@ main {
 }
 .userLists .card {
     font-size: 28px;
-    background-color: rgb(124, 124, 124);
+    background-color: rgb(0, 80, 227);
     color: white;
     border-radius: 45px;
     width: 95%;
@@ -110,7 +110,7 @@ main {
 /* List Items */
 .listContent {
     height: 50%;
-    border-bottom: 4px dashed black;
+    border-bottom: 4px dashed rgb(0, 0, 0);
     overflow-y: scroll;
 }
 .listContent::-webkit-scrollbar {
@@ -125,7 +125,7 @@ main {
     margin: 2.5% 0;
     margin-left: 2.5%;
     font-size: 28px;
-    background-color: rgb(124, 124, 124);
+    background-color: rgb(0, 80, 227);
     color: white;
     border: none;
     border-radius: 45px;
@@ -136,7 +136,7 @@ main {
 }
 .listContent .card {
     font-size: 28px;
-    background-color: rgb(124, 124, 124);
+    background-color: rgb(0, 80, 227);
     color: white;
     border-radius: 45px;
     width: 95%;
@@ -183,7 +183,7 @@ main {
 .doneTasks {
     height: 50%;
     overflow-y: scroll;
-    background-color: rgb(161, 255, 161);
+    background-color: rgb(118, 255, 118);
 }
 
 .doneTasks::-webkit-scrollbar {
@@ -192,7 +192,7 @@ main {
 
 .doneTasks .card {
     font-size: 28px;
-    background-color: rgb(124, 124, 124);
+    background-color: rgb(0, 88, 251);
     color: white;
     border-radius: 45px;
     width: 95%;
@@ -200,12 +200,9 @@ main {
     margin: 2.5% 0 0 2.5%;
     display: flex;
     justify-content: space-between;
-    cursor: pointer;
     opacity: 1;
 }
-.doneTasks .card:hover {
-    outline: 4px solid rgb(0, 255, 0);
-}
+
 .doneTasks .card .title {
     margin: 0px 30px;
     display: flex;
@@ -217,7 +214,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgb(13, 255, 0);
+    color: rgb(0, 255, 17);
 }
 .doneTasks .delete {
     margin: 0px 0px;
