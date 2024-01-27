@@ -99,10 +99,18 @@ main {
     outline: 4px solid red;
 }
 
+/* Task Container */
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    width: 50%;
+}
+
 /* List Items */
 .listContent {
-    width: 50%;
-    height: 90vh;
+    height: 50%;
+    border-bottom: 4px dashed black;
     overflow-y: scroll;
 }
 .listContent::-webkit-scrollbar {
@@ -170,6 +178,63 @@ main {
 .listContent .delete:hover {
     outline: 4px solid red;
 }
+
+/* Done Tasks */
+.doneTasks {
+    height: 50%;
+    overflow-y: scroll;
+    background-color: rgb(161, 255, 161);
+}
+
+.doneTasks::-webkit-scrollbar {
+    display: none;
+}
+
+.doneTasks .card {
+    font-size: 28px;
+    background-color: rgb(124, 124, 124);
+    color: white;
+    border-radius: 45px;
+    width: 95%;
+    height: 50px;
+    margin: 2.5% 0 0 2.5%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    opacity: 1;
+}
+.doneTasks .card:hover {
+    outline: 4px solid rgb(0, 255, 0);
+}
+.doneTasks .card .title {
+    margin: 0px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.doneTasks .card .time {
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(13, 255, 0);
+}
+.doneTasks .delete {
+    margin: 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    width: 150px;
+    background-color: rgb(46, 48, 63);
+    border-radius: 45px;
+    z-index: 1;
+}
+.doneTasks .delete:hover {
+    outline: 4px solid red;
+}
+
 @keyframes modalIn {
     0% {
         opacity: 0;
