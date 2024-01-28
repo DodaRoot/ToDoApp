@@ -109,7 +109,7 @@ function signup() {
     let index = (Object.keys(old_data).length)
     old_data[index] = new_data
     localStorage.setItem('mainObj' , JSON.stringify(old_data))
-    location.reload()
+    showModal('Success' , 'You have successfully signed up' , true)
 }
 
 function signout() {
@@ -558,7 +558,7 @@ function showModal (modalHead , modalText , button) {
         modalButton.innerText = 'Continue'
         modal.append(modalButton)
         modalButton.addEventListener('click' , () => {
-            location.replace('list.html')
+            location.reload()
         })
     }
     else {
