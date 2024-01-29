@@ -255,8 +255,9 @@ function appendingItem(ref , animation , type) {
         })
         card.addEventListener('click' , (x) => {
             if (x.target != deleted) {
+                let new_data = [ref[0] , time.innerText]
                 let old_data = JSON.parse(localStorage.getItem('mainObj'))
-                old_data[logged][3][cardLocation][2].push(ref)
+                old_data[logged][3][cardLocation][2].push(new_data)
                 localStorage.setItem('mainObj' , JSON.stringify(old_data))
                 localObj = JSON.parse(localStorage.getItem('mainObj'))
                 for(let [index , item] of itemContainer.entries()) {
@@ -305,14 +306,14 @@ function appendingItem(ref , animation , type) {
         })
         card.addEventListener('click' , (x) => {
             if (x.target != deleted) {
+                let new_data = [ref[0] , time.innerText]
                 let old_data = JSON.parse(localStorage.getItem('mainObj'))
-                old_data[logged][3][cardLocation][2].push(ref)
+                old_data[logged][3][cardLocation][2].push(new_data)
                 localStorage.setItem('mainObj' , JSON.stringify(old_data))
                 localObj = JSON.parse(localStorage.getItem('mainObj'))  
                 for(let [index , item] of itemContainer.entries()) {
                     if (item == card) {
-                        console.log(localObj[logged][3][cardLocation][1][index])
-                        appendingDone(true , localObj[logged][3][cardLocation][1][index])
+                        appendingDone(true , localObj[logged][3][cardLocation][2][index])
                         card.style.animation = 'fadeOut 0.3s ease-in-out'
                         setTimeout(() => {
                             card.remove()
@@ -344,7 +345,13 @@ function appendingDone(animation , item) {
     title.setAttribute('class' , 'title')
     time.setAttribute('class' , 'time')
     title.innerText = item[0]
-    time.innerText = 'Completed'
+    if (item[1] == 'TimeOut') {
+        time.innerText = `Your task timed out`
+        time.style.color = 'red'
+    }
+    else {
+        time.innerText = `Completed ${item[1]} early`
+    }
     let deleted = document.createElement('div')
     deleted.setAttribute('class' , 'delete')
     deleted.innerText = '🗑️'
