@@ -44,16 +44,16 @@ else {
 }
 
 let logged = localStorage.getItem('LOGGED')
-if (logged && document.URL.includes("index.html")) {
+if (logged && (window.location.pathname.includes("index.html") || window.location.pathname == '/')) {
     location.replace('list.html')
 }
-if (logged && document.URL.includes("list.html")) {
+if (logged && (window.location.pathname.includes("list.html") || window.location.pathname == '/list' )) {
     for (let list in localObj[logged][3] ) {
         appending(list , localObj[logged][3][list] , false)
     }
 }
 
-if (document.URL.includes('list.html')) {
+if (window.location.pathname.includes('list.html') || window.location.pathname == '/list') {
     profile.innerText = localObj[logged][0]
 
     let profileImg = document.querySelector('.profile img')
