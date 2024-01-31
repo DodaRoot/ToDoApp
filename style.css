@@ -584,6 +584,13 @@ main {
         border-bottom: none;
         overflow-y: scroll;
     }
+    .listContent .card .time {
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(13, 255, 0);
+    }
     /* Done Tasks */
     .doneTasks {
         width: 100%;
@@ -591,7 +598,9 @@ main {
         overflow-y: scroll;
         background-color: rgb(118, 255, 118);
     }
-
+    .doneTasks .card .time {
+        font-size: 10px;
+    }
     /* Modal Content */
     .modalContainerItem {
         z-index: 2;
@@ -630,7 +639,5 @@ main {
         border-radius: 0px;
         font-size: 22px;
     }
-    .doneTasks .card .time {
-        font-size: 16px;
-    }
+
 }
