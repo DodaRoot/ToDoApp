@@ -3,6 +3,7 @@ body {
     padding: 0;
     font-family: sans-serif;
     background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
 }
 nav {
     display: flex;
@@ -272,8 +273,7 @@ main {
     align-items: center;
     width: 100%;
     height: 100%;
-    pointer-events: all;
-    
+    pointer-events: all; 
 }
 .modalContainer, .modalContainerItem {
     z-index: 2;
@@ -476,5 +476,161 @@ main {
     100% {
         opacity: 1;
         margin-top: 1%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    /* Login Signup */
+    .container {
+        width: 100%;
+        height: 100vh;
+    }
+    .loginCard {
+        width: 600px;
+        height: 100vh;
+        border-radius: 0px;
+        padding: 0;
+        margin: 0;
+    }
+    .loginCard form {
+        gap: 15px;
+    }
+    .loginCard form h1 {
+        font-size: 42px;
+    }
+    
+    .loginCard form h4 {
+        width: 80%;
+    }
+    
+    .loginCard form label {
+        margin-top: 15px;
+        width: 80%;
+        font-size: 25px;
+    }
+    
+    .loginCard form input {
+        width: 80%;
+        font-size: 22px;
+    }
+    
+    .loginCard form button {
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+        width: 70%;
+        background-color: rgb(0, 47, 255);
+        color: white;
+        font-size: 22px;
+        padding: 8px;
+        border: 1px;
+        border-radius: 100px;
+    }
+
+    /* Popup */
+    .popupModal {
+        width: 95%;
+        height: fit-content;
+        border-radius: 50px;
+        font-size: 20px;
+    }
+    .popupModal button {
+        border-radius: 30px;
+        padding: 10px;
+        margin: 15px;
+        font-size: 22px;
+    }
+    body {
+        scroll-behavior: smooth;
+        overflow-y: scroll;
+    }
+    /* Main top */
+    nav {
+        height: 10vh;
+        padding: 0px 30px;
+        font-size: 25px;
+    }
+    .userImg {
+        max-width: 60px;
+        max-height: 60px;
+        border-radius: 100%;
+    }
+    /* Main container */
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+    /* User List */
+    .userLists {
+        width: 100%;
+        height: 30vh;
+        border-right:  none;
+        border-bottom: 4px dashed black;
+        overflow-y: scroll;
+    }
+
+    /* Task Container */
+    .taskContainer {
+        display: flex;
+        flex-direction: column;
+        height: 60vh;
+        width: 100%;
+    }
+
+    /* List Items */
+    .listContent {
+        width: 100%;
+        height: 60%;
+        border-bottom: none;
+        overflow-y: scroll;
+    }
+    /* Done Tasks */
+    .doneTasks {
+        width: 100%;
+        height: 40%;
+        overflow-y: scroll;
+        background-color: rgb(118, 255, 118);
+    }
+
+    /* Modal Content */
+    .modalContainerItem {
+        z-index: 2;
+        display: none;
+        position: fixed;
+        top: 0;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        pointer-events: all; 
+    }
+    .modalContainer, .modalContainerItem {
+        z-index: 2;
+        display: none;
+        position: fixed;
+        top: 0;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        pointer-events: all;
+        animation: modalIn .5s ease-in-out;
+    }
+
+    .modal {
+        display: flex;
+        width: 100%;
+        height: 70%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        background-color: rgb(46, 48, 63);
+        color: white;
+        border-radius: 0px;
+        font-size: 22px;
+    }
+    .doneTasks .card .time {
+        font-size: 16px;
     }
 }
